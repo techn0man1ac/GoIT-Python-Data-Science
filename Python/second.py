@@ -1,7 +1,7 @@
-person = {'name': 'Oleh', "age": 22, "phone": "38(098)*********", 'student': False, 1243: ['test', 'failed']}
+person = {'name': 'Serhii', "age": 32, "phone": "38(068)*********", 'student': False, 1243: ['test', 'failed']}
 print(person)
 
-new_data = {'location': 'Ukraine, Lviv', 'lang': "ukr"}
+new_data = {'location': 'Ukraine, Lutsk', 'lang': "ukr"}
 person.update(new_data)
 print(person)
 print(person.get('name', 'Noname'))
