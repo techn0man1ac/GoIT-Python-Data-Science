@@ -16,3 +16,8 @@ y2 = 54
 d = ((x1 - x2)**2 + (y1 - y2)**2)**0.5
 
 print(d)
+
+# Розрахунок периметра квадрату
+a = float(input("Enter the side of the squar a: "))
+P = 4 * a
+print(f"The perimeter of the square is equal {P}")
