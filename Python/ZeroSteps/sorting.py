@@ -1,7 +1,7 @@
 words = ["banana", "apple", "cherry"]
-print(f"Unsorted: {words} ") 
+print(f"Unsorted: {words} ")
 wordsSort = sorted(words, key=len)
-print(f"words: {words} wordsSort: {wordsSort}") 
+print(f"words: {words} wordsSort: {wordsSort}")
 
 chars = ["banana", "apple", "cherry"]
 print(f"chars: {chars}") 
