@@ -1,3 +1,4 @@
+# Словники
 my_dict = {"name": "Serhii", "age": 32, "city": "Lutsk"}
 print(f"my_dict: {my_dict}") 
 my_dict["age"] = 33  # Змінює вік на 26
