@@ -1,4 +1,12 @@
-numbers = [1, 2, 3, 1, 2, 3, 4]
-print(numbers)
-d_lst = set(numbers)
-print(f"numbers: {numbers}, d_lst: {d_lst}")
+lst = [1, 2, 3, 1, 2, 2, 3, 4, 1]
+print(lst)
+d_lst = set(lst)
+lst=list(d_lst)
+print(f"numbers: {lst}, d_lst: {d_lst}")
+
+a = {1, 2, 3}
+b = {3, 4, 5}
+print(a.symmetric_difference(b)) # Всі елементи з двох множин, окрім загальних
+print(a - b) #{1, 2} Різниця між двома множинами
+print(a & b) #{3} Перетин двох множин
+print(a | b) #{1, 2, 3, 4, 5} об'єднання
