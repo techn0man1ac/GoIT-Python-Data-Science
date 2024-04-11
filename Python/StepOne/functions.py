@@ -16,3 +16,20 @@ def add(value_one: int, value_two: int) -> int:
 
 result: int = add(123456, 3332)
 print(result)
+
+def print_input(value, *transport, **text):
+    print(value)
+    print(transport)
+    print(text)
+    print(text['may']/9)
+    #print(hello)
+
+print_input(78, 246, 'qwerty', 'iuagfioaggli;as', 346346346, 50, hello="Python", may=45)
+
+def print_input(*transport, value, **text):
+    print(value)
+    print(transport)
+    print(text)
+    print(text['may']/9)
+
+print_input(78, 246, 'qwerty', 'iuagfioaggli;as', 346346346, 50, hello="Python", may=45)
