@@ -22,3 +22,14 @@ age = my_dict.get("age")  # Поверне 33
 gender = my_dict.get("gender")  # Поверне None, оскільки "gender" немає в словнику
 
 print(f"my_dict: {my_dict}, gender: {gender}")
+
+# Unite several dict into new one
+dict_a = {'Alex':12, 'Olga':10}
+dict_b = {'Boris':9, 'Kostya':10}
+dict_c = {'Ira':11, 'Vova':6}
+
+print(dict_a) #'Alex': 12, 'Olga': 10}
+dict_a.update(dict_b)
+print(dict_a) #{'Alex': 12, 'Olga': 10, 'Boris': 9, 'Kostya': 10}
+dict_c.update(dict_a)
+print(dict_c) #{'Ira': 11, 'Vova': 6, 'Alex': 12, 'Olga': 10, 'Boris': 9, 'Kostya': 10}

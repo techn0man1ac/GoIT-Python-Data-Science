@@ -1,8 +1,6 @@
-# Введення (отримання даних)
-InputName = input("Input Name: ")
+user_name = input("Enter your name: ")
 
-# Перетворення (обробка даних)
-meaasgeAI = f"Hello, {InputName}!"
-
-# Виведення (виведення даних)
-print(meaasgeAI)
+if user_name:
+    print(f"Hi {user_name}, welcome to the AI club")
+else:
+    print("Hi Anonym!")
