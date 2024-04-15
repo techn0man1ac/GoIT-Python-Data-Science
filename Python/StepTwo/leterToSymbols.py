@@ -1,0 +1,1 @@
+print([ord(char) - 96 for char in input('Write Text: ').lower()])

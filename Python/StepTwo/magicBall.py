@@ -1,4 +1,5 @@
 import random
+from datetime import datetime
 
-input("Ask your question:")
-print(random.choice(['Yes', 'No', 'Maybe']))
+random.seed = input("Ask your question: ") + str(datetime.now())
+print(random.choice(["Many doubts,", "So it will be,", "Ask later", "Yes", "I can't answer now", "Chances are good", "Ask the question more precisely", "Definitely", "Now unknown,", "No doubts, many doubts,", "Definitely yes", "Good chances", "Repeat the question," , "Maybe", "Will come true,", "A bad outlook", "The stars say no", "It should be so"]))
