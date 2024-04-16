@@ -1,6 +1,6 @@
 '''
 Legend Python calculator by Serhii Trush
-V 0.1 
+V 0.2 
 '''
 value0 = 0.0
 operation =''
