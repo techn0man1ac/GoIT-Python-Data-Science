@@ -3,8 +3,8 @@ from datetime import datetime
 
 def get_random_response():
     responses = [
-        "Many doubts,", 
-        "So it will be,", 
+        "Many doubts", 
+        "So it will be", 
         "Ask later", 
         "Yes", 
         "I can't answer now", 
