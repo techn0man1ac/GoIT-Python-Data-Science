@@ -2,44 +2,35 @@
 Legend Python calculator by Serhii Trush
 V 0.2 
 '''
-value0 = 0.0
-operation =''
-value1 = 0.0
 
-def mathMagic():
-#print(f'op. == "/" {operation == "/"} op. == "//" {operation == "//"} val.1 == 0 {value1 == 0} ')
-
-    if (operation == "/" or operation == "//") and value1 == 0:
+def mathMagic(val0:float, oper:str, val1:float) -> str: # need to return String
+    if (oper == "/" or oper == "//") and val1 == 0: #print(f'op. == "/" {oper == "/"} op. == "//" {oper == "//"} val.1 == 0 {val1 == 0} ')
         output = 'Error, divide by zero'
     else:
-        match operation:
+        match oper:
             case '+':
-                output = value0 + value1
+                output = val0 + val1
             case '-':
-               output = value0 - value1
+                output = val0 - val1
             case '*':
-                output = value0 * value1
+                output = val0 * val1
             case '**':
-                output = value0 ** value1
+                output = val0 ** val1
             case '/':
-                output = value0 / value1    
+                output = val0 / val1    
             case '//':
-                output = value0 // value1
+                output = val0 // val1
             case '%':
-                output = value0 % value1
+                output = val0 % val1
             case _:
                 output = 'Error, unknown operation' 
     return output
 
 try: # make exeption - protect wrong user input
-    value0 = float(input("Value 1 = "))
-    operation = input("Operation(+, -, *, **, /, //, %): ")
-    value1 = float(input("Value 2 = "))
+    print(mathMagic(float(input("Value 1 = ")), input("Operation(+, -, *, **, /, //, %): "), float(input("Value 2 = "))))
 
 except ValueError:
     print("Value 1/Value 2 is not a number")
-else:
-    
-    print(mathMagic())
+
 finally:
-    print("End")
+    print("Thank's, goodbye")
