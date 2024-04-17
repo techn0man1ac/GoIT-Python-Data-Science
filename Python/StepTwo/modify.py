@@ -3,8 +3,8 @@ def modify_string(original: str) -> str:
     return original
 
 str_var = "Original"
-print(modify_string(str_var))  # Changed
-print(str_var)                # Original
+print(id(modify_string(str_var)))  # Changed
+print(id(str_var))                # Original
 
 '''
 У цьому прикладі, навіть після зміни рядка 
@@ -33,3 +33,8 @@ def modify_list(lst: list) -> None:
 my_list = [1, 2, 3]
 modify_list(my_list)
 print(my_list)  # output: [1, 2, 3]
+
+'''
+Використовуйте метод copy() для створення копій 
+змінних об'єктів, якщо не хочете змінювати оригінал.
+'''
