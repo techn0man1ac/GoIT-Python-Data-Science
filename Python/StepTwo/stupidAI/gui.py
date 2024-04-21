@@ -2,53 +2,59 @@ import sys
 import random
 from datetime import datetime
 import ai_module as ai_module #include ai_module.py
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit, QPushButton, QLabel
+from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QTextEdit
 
 responses_list = []
 
-class MyWindow(QMainWindow):
+class ChatBot(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Stupid AI")
-        self.setGeometry(100, 100, 480, 250)
-        self.setStyleSheet("background-color: #333; color: white;")
+        self.setWindowTitle("Простий чат-бот")
+        self.setGeometry(100, 100, 400, 400)
 
-        self.text_field = QLineEdit(self)
-        self.text_field.setGeometry(50, 50, 200, 30)
-        self.text_field.setStyleSheet("background-color: #444; color: white; border: 1px solid gray; padding: 5px;")
-        self.text_field.setPlaceholderText("Задайте Ваше питання")
-        self.text_field.textChanged.connect(self.on_text_changed)
+        # Віджет для відображення чату
+        self.chat_display = QTextEdit()
+        self.chat_display.setReadOnly(True)
 
-        self.button = QPushButton("Отримати відповідь", self)
-        self.button.setGeometry(270, 50, 150, 30)
-        self.button.setStyleSheet("background-color: #00bcd4; color: white; border: 1px solid gray; padding: 5px;")
-        self.button.clicked.connect(self.button_clicked)
+        # Віджет для введення тексту
+        self.input_field = QLineEdit()
+        self.input_field.returnPressed.connect(self.send_message)
 
-        self.result_label = QLabel(self)
-        self.result_label.setGeometry(50, 100, 370, 100)
-        self.result_label.setStyleSheet("background-color: #444; color: white; border: 1px solid gray; padding: 5px;")
-        self.result_label.setWordWrap(True)
+        # Розміщення віджетів на головному вікні
+        layout = QVBoxLayout()
+        layout.addWidget(self.chat_display)
+        layout.addWidget(self.input_field)
 
-    def button_clicked(self):
-        text = self.text_field.text()
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
 
-        user_question = text + " " + str(datetime.now())
-        random.seed(user_question)
+    def send_message(self):
+        message = self.input_field.text()
+        self.input_field.clear()
+
+        # Додати повідомлення до відображення чату
+        self.add_message_to_chat("Ви:", message)
+
+        # Отримати відповідь від чат-бота
+        response = self.get_chatbot_response(message)
+        self.add_message_to_chat("Чат-бот:", response)
+
+    def add_message_to_chat(self, sender, message):
+        self.chat_display.append(f"<b>{sender}</b>: {message}")
+
+    def get_chatbot_response(self, message):
+        user_question = message + " " + str(datetime.now())
         category, response = ai_module.get_response(user_question)
         print("Категорія:", category)
         print("Відповідь:", response)
         responses_list.append((user_question, category, response))
-
-        self.result_label.setText("Всесвіт каже: " + response)
-
-    def on_text_changed(self, text):
-        if text == "":
-            self.result_label.setText("")
+        return response
 
 def main():
     app = QApplication(sys.argv)
-    window = MyWindow()
+    window = ChatBot()
     window.show()
     sys.exit(app.exec())
 
