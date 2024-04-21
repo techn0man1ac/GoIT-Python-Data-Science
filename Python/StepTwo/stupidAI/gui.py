@@ -1,5 +1,4 @@
 import sys
-import random
 from datetime import datetime
 import ai_module as ai_module #include ai_module.py
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QTextEdit
@@ -42,10 +41,13 @@ class ChatBot(QMainWindow):
         self.add_message_to_chat("Чат-бот:", response)
 
     def add_message_to_chat(self, sender, message):
-        self.chat_display.append(f"<b>{sender}</b>: {message}")
+        global timeNow
+        timeNow = datetime.now()
+        formatted_date = timeNow.strftime("%Y-%m-%d %H:%M:%S")
+        self.chat_display.append(f"<i>{formatted_date}</i> <b>{sender}</b> {message}")
 
     def get_chatbot_response(self, message):
-        user_question = message + " " + str(datetime.now())
+        user_question = message + " " + str(timeNow)
         category, response = ai_module.get_response(user_question)
         print("Категорія:", category)
         print("Відповідь:", response)
