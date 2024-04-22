@@ -1,0 +1,5 @@
+ WifiDom_2_4G,-58, TP-Link_18F5,-66, Xiaomi_2.4g,-80, Tenda_A38D50,-85, TP-Link_2B44,-85, TP-Link_56B0,-98,
+ WifiDom_2_4G,-62, TP-Link_18F5,-68, Xiaomi_2.4g,-83, TP-Link_2B44,-89, TP-Link_56B0,-93,
+ WifiDom_2_4G,-59, Xiaomi_2.4g,-80, Tenda_A38D50,-86, TP-Link_2B44,-84, TP-Link_56B0,-91,
+ WifiDom_2_4G,-56, TP-Link_18F5,-66, Xiaomi_2.4g,-79, Tenda_A38D50,-84, TP-Link_2B44,-86, TP-Link_56B0,-91,
+ WifiDom_2_4G,-58, TP-Link_18F5,-67, Xiaomi_2.4g,-86, Tenda_A38D50,-85, TP-Link_2B44,-91, TP-Link_56B0,-95,

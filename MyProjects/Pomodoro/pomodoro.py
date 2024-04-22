@@ -89,7 +89,6 @@ class PomodoroTimer(QMainWindow):
         else:
             winsound.Beep(1000, 2000)
             winsound.Beep(800, 500)
-            winsound.Beep(1000, 500)
             self.stop_timer()
                 
 def main():
