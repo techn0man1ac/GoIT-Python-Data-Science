@@ -12,17 +12,17 @@ class PomodoroTimer(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Pomodoro Timer")
-        self.setGeometry(100, 100, 300, 200)
+        self.setGeometry(100, 100, 285, 180)
 
         self.timer_label = QLabel("25:00", self)
-        self.timer_label.setGeometry(100, 50, 100, 50)
+        self.timer_label.setGeometry(110, 120, 100, 50)
 
         self.start_button = QPushButton("Start", self)
-        self.start_button.setGeometry(50, 120, 75, 30)
+        self.start_button.setGeometry(50, 80, 75, 30)
         self.start_button.clicked.connect(self.start_timer)
 
         self.stop_button = QPushButton("Stop", self)
-        self.stop_button.setGeometry(150, 120, 75, 30)
+        self.stop_button.setGeometry(150, 80, 75, 30)
         self.stop_button.clicked.connect(self.stop_timer)
         self.stop_button.setEnabled(False)
 
@@ -34,10 +34,10 @@ class PomodoroTimer(QMainWindow):
         self.work_time_spinbox.setValue(25)
 
         self.break_time_label = QLabel("Break Time:", self)
-        self.break_time_label.setGeometry(50, 90, 100, 20)
+        self.break_time_label.setGeometry(50, 50, 100, 20)
 
         self.break_time_spinbox = QSpinBox(self)
-        self.break_time_spinbox.setGeometry(160, 90, 50, 20)
+        self.break_time_spinbox.setGeometry(160, 50, 50, 20)
         self.break_time_spinbox.setValue(5)
 
         self.work_time = 25 * 60 * 1000  # Default work time is 25 minutes
