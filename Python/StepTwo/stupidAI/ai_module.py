@@ -394,4 +394,5 @@ responses = {
 def get_response(question):
     random.seed(question)
     response_category = random.choice(list(responses.keys()))
+    print(response_category)
     return response_category, random.choice(responses[response_category])
