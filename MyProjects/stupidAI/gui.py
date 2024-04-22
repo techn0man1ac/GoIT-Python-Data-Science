@@ -1,3 +1,6 @@
+'''
+Thank's ChatGPT for help
+'''
 import sys
 from datetime import datetime
 import ai_module as ai_module #include ai_module.py
