@@ -35,8 +35,8 @@
 #include <StreamString.h>
 
 #ifndef STASSID
-#define STASSID "WifiDom_2_4G"
-#define STAPSK "Y210na33oo"
+#define STASSID "YOU_WIFI_SSID"
+#define STAPSK "YOU_WIFI_PASSWORD"
 #endif
 
 const char *ssid = STASSID;
@@ -137,16 +137,16 @@ void loop(void) {
   server.handleClient();
   MDNS.update();
 
-  Serial.println("Початок сканування Wi-Fi мереж...");
+  Serial.println("Start scanning Wi-Fi networks...");
 
   int networksFound = WiFi.scanNetworks();
 
   if (networksFound == 0) {
-    Serial.println("Не вдалося знайти жодної мережі");
+    Serial.println("No network could be found");
   } else {
-    Serial.print("Знайдено ");
+    Serial.print("Found ");
     Serial.print(networksFound);
-    Serial.println(" мереж:");
+    Serial.println(" networks:");
     networkInfo = "";
     for (int i = 0; i < networksFound; ++i) {
       networkInfo += " " + WiFi.SSID(i) + "," + String(WiFi.RSSI(i)) + ",";

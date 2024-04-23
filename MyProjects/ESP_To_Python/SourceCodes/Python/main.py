@@ -27,7 +27,7 @@ def poll_esp():
             response = requests.get(url)
             if response.status_code == 200:
                 data = response.text
-                with open("MyProjects/ESP_To_Python/data.txt", "a") as file:  # Opening a file and add the data
+                with open("MyProjects/ESP_To_Python/SourceCodes/Python/data.txt", "a") as file:  # Opening a file and add the data
                     file.write(data + "\n")  # Write data on a new line
                     print(f"Datas {data} successfully added to the file data.txt {cycles} cycles")
                 response_label.config(text=data)
@@ -42,7 +42,7 @@ def main():
     global response_label, cycle_label
 
     root = tk.Tk()
-    root.title("ESP8266 GUI")
+    root.title("WiFi Signal logging")
     root.geometry("400x200")
 
     start_button = tk.Button(root, text="Start logging", command=start_polling)
