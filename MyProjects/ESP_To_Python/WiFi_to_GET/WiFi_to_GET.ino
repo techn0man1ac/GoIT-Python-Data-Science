@@ -97,9 +97,12 @@ void handleNotFound() {
 
 void setup(void) {
   pinMode(led, OUTPUT);
-  digitalWrite(led, 0);
+  digitalWrite(led, 1);
   Serial.begin(115200);
+  // Set WiFi to station mode and disconnect from an AP if it was previously connected
   WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
+  delay(100);
   WiFi.begin(ssid, password);
   Serial.println("");
 
@@ -121,7 +124,9 @@ void setup(void) {
 
   server.on("/", handleRoot);
   server.on("/inline", []() {
+    digitalWrite(led, 0);
     server.send(200, "text/plain", networkInfo);
+    
   });
   server.onNotFound(handleNotFound);
   server.begin();
@@ -147,5 +152,6 @@ void loop(void) {
       networkInfo += " " + WiFi.SSID(i) + "," + String(WiFi.RSSI(i)) + ",";
     }
     Serial.println(networkInfo);
+    digitalWrite(led, 1);
   }
 }

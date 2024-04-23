@@ -5,9 +5,12 @@ Thank's ChatGPT for help
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QSpinBox
 from PyQt6.QtCore import QTimer
+from PyQt6.QtMultimedia import QSoundEffect
+from PyQt6.QtCore import QUrl
 import winsound
 
 class PomodoroTimer(QMainWindow):
+
     def __init__(self):
         super().__init__()
 
@@ -50,6 +53,7 @@ class PomodoroTimer(QMainWindow):
         self.timer_status = ("Stop", "Work", "Break")
         self.timer_state = 0
 
+
     def start_timer(self):
         self.work_time = self.work_time_spinbox.value() * 60 * 1000
         self.break_time = self.break_time_spinbox.value() * 60 * 1000
@@ -81,14 +85,13 @@ class PomodoroTimer(QMainWindow):
                     self.timer_state = 2
                 else:
                     self.break_time = 0
-                winsound.Beep(1000, 1000)
+                winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS | winsound.SND_ASYNC)
                 print(f"self.work_time =", {self.work_time})
                 print(f"self.break_time =", {self.break_time})
             else:
                 self.current_time -= 1000
         else:
-            winsound.Beep(1000, 2000)
-            winsound.Beep(800, 500)
+            winsound.PlaySound("SystemQuestion", winsound.SND_ALIAS | winsound.SND_ASYNC)
             self.stop_timer()
                 
 def main():
