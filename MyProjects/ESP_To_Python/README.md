@@ -1,18 +1,33 @@
 # ESP8266 WiFi signal logger
 
-![Program screen](https://raw.githubusercontent.com/techn0man1ac/GoIT-Python-Data-Science/main/MyProjects/ESP_To_Python/imgs/image.png)
+![Program datalogger screen](https://raw.githubusercontent.com/techn0man1ac/GoIT-Python-Data-Science/main/MyProjects/ESP_To_Python/imgs/image.png)
 
 This project enables logging of WiFi signal strength data from ESP8266 devices. The ESP8266 device scans for nearby WiFi networks and sends the signal strength data to a Python program via HTTP GET requests. The Python program displays the data in real-time using a graphical user interface (GUI) built with Tkinter and saves it to a JSON file for further analysis.
 
+## Data visualizations
+
+This project includes data visualizations to help analyze Wi-Fi signal strength over time. Below are screenshots showcasing the visualizations:
+
+![Data visualization all](https://raw.githubusercontent.com/techn0man1ac/GoIT-Python-Data-Science/main/MyProjects/ESP_To_Python/imgs/Figure_1.png)
+
+It displays the signal strength of all detected networks.
+
+![Data visualization one](https://raw.githubusercontent.com/techn0man1ac/GoIT-Python-Data-Science/main/MyProjects/ESP_To_Python/imgs/Figure_2.png)
+
+It provides detailed information about the signal strength variations for the selected network.
+
 ## Video demonstration
 
-https://www.youtube.com/shorts/KOSmo48dc8E
+https://www.youtube.com/watch?v=217ZRDhaqyE
 
 ## Features
 
 - Logs WiFi signal strength data from ESP8266 devices
 - Real-time display of data using a GUI
 - Saves data to a JSON file for analysis
+- Polls WiFi signal strength data from an ESP8266 device.
+- Provides a graphical user interface for starting and stopping data logging.
+- Offers data visualization using matplotlib.
 
 ## Usage
 
@@ -29,7 +44,14 @@ https://www.youtube.com/shorts/KOSmo48dc8E
 - Tkinter library
 - ESP8266 device(install ArduinoJson 7.0.4 library for Arduino IDE)
 
+## JSON Data Format
+
+Please note that the program generates a JSON file with an invalid format due to missing square brackets at the beginning and end of the file. This is because each record in the JSON file represents a single scan of WiFi networks by the ESP8266 device. However, the data visualization program is designed to handle this issue and can still read the JSON file correctly.
+
 ## License
 
 This project is licensed under the MIT License.
 
+## Acknowledgments
+
+Thanks to ChatGPT for assistance with the project.
