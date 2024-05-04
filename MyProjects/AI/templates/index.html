@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Bot</title>
+</head>
+<body>
+    <h1>Chat Bot</h1>
+    <form action="/chat" method="post">
+        <input type="text" name="user_input">
+        <input type="submit" value="Send">
+    </form>
+    <div id="response"></div>
+    <script>
+        document.querySelector('form').onsubmit = async function(event) {
+            event.preventDefault();
+            const form_data = new FormData(event.target);
+            const response = await fetch('/chat', {
+                method: 'POST',
+                body: form_data
+            });
+            const data = await response.text();
+            document.getElementById('response').innerText = data;
+            event.target.reset();
+        };
+    </script>
+</body>
+</html>
