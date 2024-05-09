@@ -1,4 +1,3 @@
-import os
 from flask import Flask, render_template, request
 import sqlite3
 from flask import g
@@ -25,6 +24,7 @@ with app.app_context():
     db = get_db()
     cursor = db.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS dialog_history (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_input TEXT,
         bot_response TEXT
     )""")
@@ -34,10 +34,11 @@ with app.app_context():
 def load_dialog():
     dialog_history = []
     cursor = get_db().cursor()
-    cursor.execute('SELECT * FROM dialog_history')
+    cursor.execute('SELECT bot_response FROM dialog_history')
     for row in cursor.fetchall():
-        dialog_history.append((row[0], row[1]))
+        dialog_history.append(row[0])  # Додаємо тільки відповіді бота до списку
     return dialog_history
+
 
 # Save dialog to database
 def save_dialog(user_input, bot_response):
@@ -68,7 +69,7 @@ def chat():
 
     # Якщо відповідь не знайдено в кеші, отримати відповідь з зовнішнього сервісу
     try:
-        response = ollama.chat(model='llama2', messages=[{'role': 'user', 'content': user_input}])
+        response = ollama.chat(model='llama3', messages=[{'role': 'user', 'content': user_input}])
         bot_response = response['message']['content']
     except Exception as e:
         bot_response = f"Виникла помилка: {str(e)}"
@@ -83,7 +84,7 @@ def get_cached_response(user_input):
     cursor = get_db().cursor()
     cursor.execute('SELECT bot_response FROM dialog_history WHERE user_input = ?', (user_input,))
     result = cursor.fetchone()
-    if result:
+    if result is not None:  # Перевіряємо, чи result не є None
         return result[0]  # Повертаємо знайдену відповідь
     return None  # Повертаємо None, якщо відповідь не знайдено
 

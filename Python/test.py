@@ -1,43 +1,41 @@
-'''
-Вимоги до завдання:
-min - мінімальне можливе число у наборі (не менше 1).
-max - максимальне можливе число у наборі (не більше 1000).
-quantity - кількість чисел, які потрібно вибрати (значення між min і max).
-Функція генерує вказану кількість унікальних чисел у заданому діапазоні.
-Функція повертає список випадково вибраних, відсортованих чисел. 
-Числа в наборі не повинні повторюватися. Якщо параметри не 
-відповідають заданим обмеженням, функція повертає пустий список.
-'''
+import os
+from typing import Dict, List
+from groq import Groq
 
-from random import randint
+# Get a free API key from https://console.groq.com/keys
+os.environ["GROQ_API_KEY"] = "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"
 
-def get_numbers_ticket(min_, max_, quantity):
-    try: # Обробка вийнятків, якщо все ок то відбувається "магія"
-        int(min_) # Потрібно щоб відпрацював except
-        int(max_)
-        int(quantity)
-        numbers = set() # Використовую множини
+LLAMA3_70B_INSTRUCT = "llama3-70b-8192"
+LLAMA3_8B_INSTRUCT = "llama3-8b-8192"
 
-        if((max_ <= 1000 and min_ >=1) and ((max_ - min_) >= quantity)): # тут вся магія
-            while len(numbers) != quantity: # перебір випадкових чисел у циклі, допоки не накопичим "quantity" цифер
-                numbers.add(randint(min_, max_)) # тут задається мінімум і максимум генерованих чисел
-            return sorted(numbers) # сортуємо отримані випадкові числа, від найменьшого до найбільшого
-        print("Number error, use min >= 1, max <= 1000, quantity is need to be in range max-min") # Помилка вводу
-        return list(numbers) # Конвертую множини у список згідно завдання
-    
-    except ValueError: # Якщо щось не так то кажемо як треба
-        print(f"Number error, use min >= 1, max <= 1000, quantity is need to be in range max-min") # Помилка вводу
-        return list(numbers)
+DEFAULT_MODEL = LLAMA3_70B_INSTRUCT
 
-lottery_numbers = get_numbers_ticket(2, 8, 4)
-print("Ваші лотерейні числа:", lottery_numbers)
+client = Groq()
 
-'''
-Критерії оцінювання:
-Валідність вхідних даних: функція повинна перевіряти коректність параметрів.
-Унікальність результату: усі числа у видачі повинні бути унікальними.
-Відповідність вимогам: результат має бути у вигляді відсортованого списку.
-Читабельність коду: код має бути чистим і добре документованим.
-Приклад: Припустимо, вам потрібно вибрати 6 унікальних чисел для 
-лотерейного квитка, де числа повинні бути у діапазоні від 1 до 49.
-'''
+def assistant(content: str):
+    return {"role": "assistant", "content": content}
+
+def user(content: str):
+    return {"role": "user", "content": content}
+
+def chat_completion(
+    messages: List[Dict], model=DEFAULT_MODEL, temperature: float = 0.6, top_p: float = 0.9
+) -> str:
+    response = client.chat.completions.create(
+        messages=messages, model=model, temperature=temperature, top_p=top_p
+    )
+    return response.choices[0].message.content
+
+
+def completion(
+    prompt: str, model: str = DEFAULT_MODEL, temperature: float = 0.6, top_p: float = 0.9
+) -> str:
+    return chat_completion([user(prompt)], model=model, temperature=temperature, top_p=top_p)
+
+def complete_and_print(prompt: str, model: str = DEFAULT_MODEL):
+    print(f'==============\n{prompt}\n==============')
+    response = completion(prompt, model)
+    print("AI: " + response, end='\n\n')
+
+
+complete_and_print("Enter your prompt here")
