@@ -3,7 +3,7 @@ from typing import Dict, List
 from groq import Groq
 
 # Get a free API key from https://console.groq.com/keys
-os.environ["GROQ_API_KEY"] = "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"
+os.environ["GROQ_API_KEY"] = "API_KEY"
 
 LLAMA3_70B_INSTRUCT = "llama3-70b-8192"
 LLAMA3_8B_INSTRUCT = "llama3-8b-8192"
