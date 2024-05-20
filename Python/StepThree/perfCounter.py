@@ -14,3 +14,5 @@ end_time = time.perf_counter()
 execution_time = end_time - start_time
 print(f"Час виконання: {execution_time} секунд({start_time} - {end_time})")
 # Час виконання: 0.08678959999815561 секунд(124868.0784736 - 124868.1652632)
+
+print(f'{{ "num_ctx": {256000} }}')

@@ -33,3 +33,8 @@ URL пробіли зазвичай кодуються як +.
 Після завершення циклу виводиться оброблений 
 словник obj_query, де ключі та значення відповідають параметрам запиту.
 '''
+
+import urllib.request
+with urllib.request.urlopen('http://python.org/') as response:
+   html = response.read()
+   print(html)

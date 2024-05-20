@@ -1,15 +1,16 @@
 import telebot
 import ollama
 import json
+import urllib.request
 
 # Replace with your desired filename
 CONTEXT_FILE = "MyProjects/AI/conversation_context.txt"
 
-BOT_TOKEN = 'TOKEN_API'
+BOT_TOKEN = 'YOU_API_KEY'
 OLLAMA_MODEL = 'llama3'
 
-MAX_CONTEXT_SIZE = 30_000 # Tokens
-MAX_RESPONSE_LENGHT = 15_000 
+CONTEXT_WINDOW_SIZE = 16_384 # Tokens
+MAX_RESPONSE_LENGHT = 8_192 # Кількість символів для відповіді
 
 bot = telebot.TeleBot(BOT_TOKEN)
 conversation_context = []
@@ -35,8 +36,8 @@ def update_context(new_context):
     """Оновити контекст розмови новими повідомленнями."""
     global conversation_context
     conversation_context.extend(new_context)
-    if len(conversation_context) > MAX_CONTEXT_SIZE:
-        conversation_context = conversation_context[-MAX_CONTEXT_SIZE:]
+    if len(conversation_context) > CONTEXT_WINDOW_SIZE:
+        conversation_context = conversation_context[-CONTEXT_WINDOW_SIZE:]
 
 def handle_user_message(message):
     """Обробляти повідомлення користувача."""
@@ -49,13 +50,20 @@ def handle_user_message(message):
             user_message = "Привітайся"
             conversation_context.clear()  # Очистити контекст для нової розмови
 
+        if user_message == '/context':
+            systemSet = 'Ти - "Tech01-бот", відповідай коротко та лаконічно, українською мовою'  # Підказка для представлення штучного інтелекту
+            user_message = "Ти оновив контекст бесіди"
+
+        if user_message == '/translate':
+            user_message = "Переклади повідомлення на українську мову"
+
         if message.reply_to_message:
             # Витягти текст цитованого повідомлення
             original_message = message.reply_to_message.text
             # Об'єднати цитоване повідомлення та ваше повідомлення для контексту
             user_message = f"{original_message}\n\n{user_message}"
 
-        ollama_response = ollama.generate(model=OLLAMA_MODEL, context=conversation_context, prompt=user_message, system = systemSet)
+        ollama_response = ollama.generate(model=OLLAMA_MODEL, prompt=user_message, system = systemSet, context = conversation_context)
         ollama_text = ollama_response['response'][:MAX_RESPONSE_LENGHT]
         update_context(ollama_response['context'])
         bot.reply_to(message, ollama_text)
