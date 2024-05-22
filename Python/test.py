@@ -1,41 +1,38 @@
-import os
-from typing import Dict, List
-from groq import Groq
+# Chat with an intelligent assistant in your terminal
+from openai import OpenAI
 
-# Get a free API key from https://console.groq.com/keys
-os.environ["GROQ_API_KEY"] = "API_KEY"
+# Point to the local server
+client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
-LLAMA3_70B_INSTRUCT = "llama3-70b-8192"
-LLAMA3_8B_INSTRUCT = "llama3-8b-8192"
+history = [
+    {"role": "system", "content": "Ви завжди відповідаєте на питання з форматуванням розмітки, використовуючи синтаксис GitHub. Форматування розмітки, яке ви підтримуєте: заголовки, напівжирний, курсив, посилання, таблиці, списки, блоки коду та блок-цитати. Ви повинні опустити те, що ви відповідаєте на питання за допомогою розмітки. Будь-які HTML-теги повинні бути взяті в лапки, наприклад, <html>. Ви будете покарані за не відображення коду в лапках. При поверненні блоків коду вказуйте мову. Ви - корисний, шанобливий і чесний помічник. Завжди відповідайте максимально корисно, але в той же час безпечно. Ваші відповіді не повинні містити шкідливого, неетичного, расистського, сексистського, токсичного, небезпечного або незаконного контенту. Будь ласка, переконайтеся, що ваші відповіді є соціально неупередженими та позитивними за своєю суттю. Якщо питання не має сенсу або не відповідає дійсності, поясніть, чому, замість того, щоб відповідати неправильно. Якщо ви не знаєте відповіді на запитання, будь ласка, не поширюйте неправдиву інформацію."},
+    {"role": "user", "content": "Твоя мова українська. Говориш коротко та лаконічно"},
+]
 
-DEFAULT_MODEL = LLAMA3_70B_INSTRUCT
-
-client = Groq()
-
-def assistant(content: str):
-    return {"role": "assistant", "content": content}
-
-def user(content: str):
-    return {"role": "user", "content": content}
-
-def chat_completion(
-    messages: List[Dict], model=DEFAULT_MODEL, temperature: float = 0.6, top_p: float = 0.9
-) -> str:
-    response = client.chat.completions.create(
-        messages=messages, model=model, temperature=temperature, top_p=top_p
+while True:
+    completion = client.chat.completions.create(
+        model="TheBloke/Mistral-7B-Instruct-v0.2-GGUF",
+        messages=history,
+        temperature=0.7,
+        stream=True,
     )
-    return response.choices[0].message.content
 
+    new_message = {"role": "assistant", "content": ""}
+    
+    for chunk in completion:
+        if chunk.choices[0].delta.content:
+            print(chunk.choices[0].delta.content, end="", flush=True)
+            new_message["content"] += chunk.choices[0].delta.content
 
-def completion(
-    prompt: str, model: str = DEFAULT_MODEL, temperature: float = 0.6, top_p: float = 0.9
-) -> str:
-    return chat_completion([user(prompt)], model=model, temperature=temperature, top_p=top_p)
+    history.append(new_message)
+    
+    # Uncomment to see chat history
+    # import json
+    # gray_color = "\033[90m"
+    # reset_color = "\033[0m"
+    # print(f"{gray_color}\n{'-'*20} History dump {'-'*20}\n")
+    # print(json.dumps(history, indent=2))
+    # print(f"\n{'-'*55}\n{reset_color}")
 
-def complete_and_print(prompt: str, model: str = DEFAULT_MODEL):
-    print(f'==============\n{prompt}\n==============')
-    response = completion(prompt, model)
-    print("AI: " + response, end='\n\n')
-
-
-complete_and_print("Enter your prompt here")
+    print()
+    history.append({"role": "user", "content": input("> ")})

@@ -3,11 +3,11 @@ Thank's ChatGPT for help
 '''
 
 import sys
+import pygame
+import time
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QSpinBox
 from PyQt6.QtCore import QTimer
-from PyQt6.QtMultimedia import QSoundEffect
-from PyQt6.QtCore import QUrl
-import winsound
+
 
 class PomodoroTimer(QMainWindow):
 
@@ -33,14 +33,14 @@ class PomodoroTimer(QMainWindow):
         self.work_time_label.setGeometry(50, 20, 100, 20)
 
         self.work_time_spinbox = QSpinBox(self)
-        self.work_time_spinbox.setGeometry(160, 20, 50, 20)
+        self.work_time_spinbox.setGeometry(150, 20, 75, 30)
         self.work_time_spinbox.setValue(25)
 
         self.break_time_label = QLabel("Break Time:", self)
         self.break_time_label.setGeometry(50, 50, 100, 20)
 
         self.break_time_spinbox = QSpinBox(self)
-        self.break_time_spinbox.setGeometry(160, 50, 50, 20)
+        self.break_time_spinbox.setGeometry(150, 50, 75, 30)
         self.break_time_spinbox.setValue(5)
 
         self.work_time = 25 * 60 * 1000  # Default work time is 25 minutes
@@ -70,6 +70,14 @@ class PomodoroTimer(QMainWindow):
         self.timer_state = 0
         self.timer_label.setText(f"{self.timer_status[self.timer_state]}")
 
+    def play_audio(self,filename):
+        pygame.mixer.init()
+        pygame.mixer.music.load(filename)
+        pygame.mixer.music.play()
+        # Чекаємо, поки відтворення завершиться
+        while pygame.mixer.music.get_busy():
+            time.sleep(0.1)
+
     def update_timer(self):
         minutes = self.current_time // 60000
         seconds = (self.current_time % 60000) // 1000
@@ -83,15 +91,17 @@ class PomodoroTimer(QMainWindow):
                 if self.timer_state == 1:
                     self.current_time = self.break_time
                     self.timer_state = 2
+                    self.play_audio("MyProjects/Pomodoro/songs/rest.mp3")
                 else:
                     self.break_time = 0
-                winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS | winsound.SND_ASYNC)
+                #winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS | winsound.SND_ASYNC)
                 print(f"self.work_time =", {self.work_time})
                 print(f"self.break_time =", {self.break_time})
             else:
                 self.current_time -= 1000
         else:
-            winsound.PlaySound("SystemQuestion", winsound.SND_ALIAS | winsound.SND_ASYNC)
+            #winsound.PlaySound("SystemQuestion", winsound.SND_ALIAS | winsound.SND_ASYNC)
+            self.play_audio("MyProjects/Pomodoro/songs/work.mp3")
             self.stop_timer()
                 
 def main():

@@ -1,15 +1,14 @@
 import telebot
 import ollama
 import json
-import urllib.request
 
 # Replace with your desired filename
 CONTEXT_FILE = "MyProjects/AI/conversation_context.txt"
 
-BOT_TOKEN = 'YOU_API_KEY'
+BOT_TOKEN = 'API_TOKEN'
 OLLAMA_MODEL = 'llama3'
 
-CONTEXT_WINDOW_SIZE = 16_384 # Tokens
+CONTEXT_WINDOW_SIZE = 32_768 # Tokens
 MAX_RESPONSE_LENGHT = 8_192 # Кількість символів для відповіді
 
 bot = telebot.TeleBot(BOT_TOKEN)

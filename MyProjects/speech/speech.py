@@ -10,7 +10,7 @@ def play_audio(filename):
     while pygame.mixer.music.get_busy():
         time.sleep(0.1)
 
-text = "Сало то є файно"
+text = "Сергій, пора зробити паузу, відпочинь"
 tts = gTTS(text=text, lang='uk')
 tts.save("MyProjects/speech/temp.mp3")
 
