@@ -11,9 +11,9 @@ history = [
 
 while True:
     completion = client.chat.completions.create(
-        model="TheBloke/Mistral-7B-Instruct-v0.2-GGUF",
+        model="MaziyarPanahi/Llama-3-8B-Instruct-32k-v0.1-GGUF",
         messages=history,
-        temperature=0.7,
+        temperature=0.5,
         stream=True,
     )
 
